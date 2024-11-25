@@ -22,19 +22,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity nexys4ddr_main is
     port(
         an:         out     std_logic_vector(7 downto 0);
         seg:        out     std_logic_vector(6 downto 0);
+        LED:        out     std_logic_vector(5 downto 0);
         dp:         out     std_logic;
         
         JA:         inout   std_logic_vector(7 downto 0);
@@ -43,19 +35,29 @@ entity nexys4ddr_main is
 end nexys4ddr_main;
 
 architecture Behavioral of nexys4ddr_main is
-signal key: std_logic_vector(3 downto 0);
-begin
-    dp <= '1';
-    an <= "11111110";
+signal key:     std_logic_vector(3 downto 0);
+signal data:    std_logic_vector(39 downto 0);
+begin    
+    data <= x"00000000" & "000" & '0' & key;
     
-    disp0: entity work.binary_to_seven_segment port map(
-        number_nibble => key,
-        seg => seg
+    disp0: entity work.seven_seg_controller port map(
+        seg => seg,
+        an => an,
+        dp => dp,
+        d => data,
+        active => "00000001",
+        clk100MHz => clk100MHz
     );
     
-    key0: entity work.pmod_kypd port map(
-        clk100MHz => clk100MHz,
+    key0: entity work.key_wrapper port map(
         pmod => JA,
-        digit => key
+        digit => key,
+        key_a => LED(0),
+        key_b => LED(1),
+        key_c => LED(2),
+        key_d => LED(3),
+        key_e => LED(4),
+        key_f => LED(5),
+        clk100MHz => clk100MHz
     );
 end Behavioral;
