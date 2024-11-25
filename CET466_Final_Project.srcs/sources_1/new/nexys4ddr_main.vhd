@@ -23,6 +23,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity nexys4ddr_main is
+    generic(
+        WORD_SIZE:  natural := 27;          -- MSB numeric values
+        MAX_NUM:    natural := 99999999     -- Maximum possible value
+    );
     port(
         an:         out     std_logic_vector(7 downto 0);
         seg:        out     std_logic_vector(6 downto 0);
