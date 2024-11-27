@@ -41,78 +41,83 @@ entity key_wrapper is
         key_d : out STD_LOGIC;
         key_e : out STD_LOGIC;
         key_f : out STD_LOGIC;
+        press:  out std_logic;
         clk100MHz : in STD_LOGIC
     );
 end key_wrapper;
 
 architecture Behavioral of key_wrapper is
 signal key: std_logic_vector(3 downto 0);
+
 begin
     
     process (key) is
     begin
-        if key = x"A" then
-            key_a <= '1';
-            key_b <= '0';
-            key_c <= '0';
-            key_d <= '0';
-            key_e <= '0';
-            key_f <= '0';
-            digit <= x"0";
-        elsif key = x"B" then
-            key_a <= '0';
-            key_b <= '1';
-            key_c <= '0';
-            key_d <= '0';
-            key_e <= '0';
-            key_f <= '0';
-            digit <= x"0";
-        elsif key = x"C" then
-            key_a <= '0';
-            key_b <= '0';
-            key_c <= '1';
-            key_d <= '0';
-            key_e <= '0';
-            key_f <= '0';
-            digit <= x"0";
-        elsif key = x"D" then
-            key_a <= '0';
-            key_b <= '0';
-            key_c <= '0';
-            key_d <= '1';
-            key_e <= '0';
-            key_f <= '0';
-            digit <= x"0";
-        elsif key = x"E" then
-            key_a <= '0';
-            key_b <= '0';
-            key_c <= '0';
-            key_d <= '0';
-            key_e <= '1';
-            key_f <= '0';
-            digit <= x"0";
-        elsif key = x"F" then
-            key_a <= '0';
-            key_b <= '0';
-            key_c <= '0';
-            key_d <= '0';
-            key_e <= '0';
-            key_f <= '1';
-            digit <= x"0";
-        else
-            key_a <= '0';
-            key_b <= '0';
-            key_c <= '0';
-            key_d <= '0';
-            key_e <= '0';
-            key_f <= '0';
-            digit <= key;
+        if press = '1' then
+            if key = x"A" then
+                key_a <= '1';
+                key_b <= '0';
+                key_c <= '0';
+                key_d <= '0';
+                key_e <= '0';
+                key_f <= '0';
+                digit <= x"0";
+            elsif key = x"B" then
+                key_a <= '0';
+                key_b <= '1';
+                key_c <= '0';
+                key_d <= '0';
+                key_e <= '0';
+                key_f <= '0';
+                digit <= x"0";
+            elsif key = x"C" then
+                key_a <= '0';
+                key_b <= '0';
+                key_c <= '1';
+                key_d <= '0';
+                key_e <= '0';
+                key_f <= '0';
+                digit <= x"0";
+            elsif key = x"D" then
+                key_a <= '0';
+                key_b <= '0';
+                key_c <= '0';
+                key_d <= '1';
+                key_e <= '0';
+                key_f <= '0';
+                digit <= x"0";
+            elsif key = x"E" then
+                key_a <= '0';
+                key_b <= '0';
+                key_c <= '0';
+                key_d <= '0';
+                key_e <= '1';
+                key_f <= '0';
+                digit <= x"0";
+            elsif key = x"F" then
+                key_a <= '0';
+                key_b <= '0';
+                key_c <= '0';
+                key_d <= '0';
+                key_e <= '0';
+                key_f <= '1';
+                digit <= x"0";
+            else
+                key_a <= '0';
+                key_b <= '0';
+                key_c <= '0';
+                key_d <= '0';
+                key_e <= '0';
+                key_f <= '0';
+                digit <= key;
+            end if;
         end if;
     end process;
 
     key0: entity work.pmod_kypd port map(
         clk100MHz => clk100MHz,
         pmod => pmod,
-        digit => key
+        digit => key,
+        press => press
     );
 end Behavioral;

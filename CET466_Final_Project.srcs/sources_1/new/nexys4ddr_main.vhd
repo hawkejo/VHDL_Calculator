@@ -30,7 +30,7 @@ entity nexys4ddr_main is
     port(
         an:         out     std_logic_vector(7 downto 0);
         seg:        out     std_logic_vector(6 downto 0);
-        LED:        out     std_logic_vector(5 downto 0);
+        LED:        out     std_logic_vector(6 downto 0);
         dp:         out     std_logic;
         
         JA:         inout   std_logic_vector(7 downto 0);
@@ -62,6 +62,7 @@ begin
         key_d => LED(3),
         key_e => LED(4),
         key_f => LED(5),
+        press => LED(5),
         clk100MHz => clk100MHz
     );
 end Behavioral;

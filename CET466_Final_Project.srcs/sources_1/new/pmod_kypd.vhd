@@ -30,7 +30,8 @@ entity pmod_kypd is
     port(
         clk100MHz:  in      std_logic;
         pmod:       inout   std_logic_vector(7 downto 0);
-        digit:      out     std_logic_vector(3 downto 0)
+        digit:      out     std_logic_vector(3 downto 0);
+        press:      out     std_logic
     );
 end pmod_kypd;
 
@@ -84,42 +85,66 @@ begin
             if col = "0111" then
                 if row = "0111" then
                     decode_out <= x"1";
+                    press <= '1';
                 elsif row = "1011" then
                     decode_out <= x"4";
+                    press <= '1';
                 elsif row = "1101" then
                     decode_out <= x"7";
+                    press <= '1';
                 elsif row = "1110" then
                     decode_out <= x"0";
+                    press <= '1';
+                else
+                    press <= '0';
                 end if;
             elsif col = "1011" then
                 if row = "0111" then
                     decode_out <= x"2";
+                    press <= '1';
                 elsif row = "1011" then
                     decode_out <= x"5";
+                    press <= '1';
                 elsif row = "1101" then
                     decode_out <= x"8";
+                    press <= '1';
                 elsif row = "1110" then
                     decode_out <= x"F";
+                    press <= '1';
+                else
+                    press <= '0';
                 end if;
             elsif col = "1101" then
                 if row = "0111" then
                     decode_out <= x"3";
+                    press <= '1';
                 elsif row = "1011" then
                     decode_out <= x"6";
+                    press <= '1';
                 elsif row = "1101" then
                     decode_out <= x"9";
+                    press <= '1';
                 elsif row = "1110" then
                     decode_out <= x"E";
+                    press <= '1';
+                else
+                    press <= '0';
                 end if;
             elsif col = "1110" then
                 if row = "0111" then
                     decode_out <= x"A";
+                    press <= '1';
                 elsif row = "1011" then
                     decode_out <= x"B";
+                    press <= '1';
                 elsif row = "1101" then
                     decode_out <= x"C";
+                    press <= '1';
                 elsif row = "1110" then
                     decode_out <= x"D";
+                    press <= '1';
+                else
+                    press <= '0';
                 end if;
             end if;
         end if;
