@@ -31,7 +31,7 @@ entity pmod_kypd is
         clk100MHz:  in      std_logic;
         pmod:       inout   std_logic_vector(7 downto 0);
         digit:      out     std_logic_vector(3 downto 0);
-        press:      out     std_logic
+        pressOut:   out     std_logic
     );
 end pmod_kypd;
 
@@ -41,19 +41,21 @@ signal col:         std_logic_vector (3 downto 0);
 signal row:         std_logic_vector (3 downto 0);
 signal decode_out:  std_logic_vector (3 downto 0);
 signal clkcnt:      integer range 0 to MAX_CNT;
+signal press:       std_logic := '0';
+--signal pressShift:  std_logic_vector(9 downto 0);
 begin
 -- Reduce the clock internally to 100 Hz
-    clkdiv: process (clk100MHz) is
-    begin
-        if rising_edge(clk100MHz) then
-            if clkcnt = MAX_CNT-1 then
-                redclk <= not redclk;
-                clkcnt <= 0;
-             else
-                clkcnt <= clkcnt + 1;
-            end if;
-        end if;
-    end process clkdiv;
+--    clkdiv: process (clk100MHz) is
+--    begin
+--        if rising_edge(clk100MHz) then
+--            if clkcnt = MAX_CNT-1 then
+--                redclk <= not redclk;
+--                clkcnt <= 0;
+--             else
+--                clkcnt <= clkcnt + 1;
+--            end if;
+--        end if;
+--    end process clkdiv;
     
     -- Decode the input from the button press
     -- The column index is a state machine for determine the column to read.
@@ -61,9 +63,9 @@ begin
     row <= pmod(7 downto 4);
     digit <= decode_out;
     
-    state: process(redclk) is
+    state: process(clk100MHz) is
     begin
-        if rising_edge(redclk) then
+        if rising_edge(clk100MHz) then
             if col = "0111" then
                 col <= "1011";
             elsif col = "1011" then
@@ -79,9 +81,9 @@ begin
     end process state;
     
     -- Decoding time
-    decode: process(redclk) is
+    decode: process(clk100MHz) is
     begin
-        if rising_edge(redclk) then
+        if rising_edge(clk100MHz) then
             if col = "0111" then
                 if row = "0111" then
                     decode_out <= x"1";
@@ -149,4 +151,10 @@ begin
             end if;
         end if;
     end process decode;
+    
+    -- Create the button press signal
+--    press_state: process(clk100MHz) is
+--    begin
+        
+--    end process press_state;
 end Behavioral;

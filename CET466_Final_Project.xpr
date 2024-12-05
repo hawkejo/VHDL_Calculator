@@ -91,6 +91,14 @@
   <FileSets Version="1" Minor="32">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sources_1/imports/seven_segment_display/bcd_decoder.vhd">
+        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../CET466_Lab02/srcs/seven_segment_display/bcd_decoder.vhd"/>
+          <Attr Name="ImportTime" Val="1729532788"/>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/imports/seven_segment_display/binary_to_seven_segment.vhd">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../CET466_Lab02/srcs/seven_segment_display/binary_to_seven_segment.vhd"/>
@@ -107,14 +115,10 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/pmod_kypd.vhd">
+      <File Path="$PSRCDIR/sources_1/imports/seven_segment_display/bcd_controller.vhd">
         <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/key_wrapper.vhd">
-        <FileInfo>
+          <Attr Name="ImportPath" Val="$PPRDIR/../CET466_Lab02/srcs/seven_segment_display/bcd_controller.vhd"/>
+          <Attr Name="ImportTime" Val="1729532788"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -125,27 +129,23 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/read_bcd.vhd">
+      <File Path="$PSRCDIR/sources_1/new/fsm_multiply.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/seven_segment_display/bcd_controller.vhd">
+      <File Path="$PSRCDIR/sources_1/new/fsm_divide.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../CET466_Lab02/srcs/seven_segment_display/bcd_controller.vhd"/>
-          <Attr Name="ImportTime" Val="1729532788"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/seven_segment_display/bcd_decoder.vhd">
+      <File Path="$PSRCDIR/sources_1/new/state_controller.vhd">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../CET466_Lab02/srcs/seven_segment_display/bcd_decoder.vhd"/>
-          <Attr Name="ImportTime" Val="1729532788"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>

@@ -21,6 +21,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
 
 entity nexys4ddr_main is
     generic(
@@ -33,36 +34,24 @@ entity nexys4ddr_main is
         LED:        out     std_logic_vector(6 downto 0);
         dp:         out     std_logic;
         
-        JA:         inout   std_logic_vector(7 downto 0);
+        lhs:        in      unsigned(7 downto 0);
+        rhs:        in      unsigned(7 downto 0);
+        add:        in      std_logic;
+        sub:        in      std_logic;
+        mult:       in      std_logic;
+        div:        in      std_logic;
         clk100MHz:  in      std_logic
     );
 end nexys4ddr_main;
 
 architecture Behavioral of nexys4ddr_main is
-signal key:     std_logic_vector(3 downto 0);
-signal data:    std_logic_vector(39 downto 0);
+signal binary_number: std_logic_vector(24 downto 0);
 begin    
-    data <= x"00000000" & "000" & '0' & key;
-    
-    disp0: entity work.seven_seg_controller port map(
+    disp0: entity work.bcd_controller port map(
+        clk => clk100MHz,
+        number => number,
         seg => seg,
         an => an,
-        dp => dp,
-        d => data,
-        active => "00000001",
-        clk100MHz => clk100MHz
-    );
-    
-    key0: entity work.key_wrapper port map(
-        pmod => JA,
-        digit => key,
-        key_a => LED(0),
-        key_b => LED(1),
-        key_c => LED(2),
-        key_d => LED(3),
-        key_e => LED(4),
-        key_f => LED(5),
-        press => LED(5),
-        clk100MHz => clk100MHz
+        dp => dp
     );
 end Behavioral;

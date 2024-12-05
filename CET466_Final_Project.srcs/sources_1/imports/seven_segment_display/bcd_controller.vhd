@@ -12,7 +12,7 @@
 --      This module is written to target multiple boards with a minimum of 4
 --      seven segment displays and convert binary numbers to BCD numbers
 --
---      This module assumes low asserted inputs and a maximum of 8 displays.
+--      This module assumes low asserted outputs and a maximum of 8 displays.
 ---------------------------------------------------------------------------------
 
 library ieee;

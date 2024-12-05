@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 11/25/2024 02:22:00 PM
+-- Create Date: 12/04/2024 04:09:48 PM
 -- Design Name: 
--- Module Name: read_bcd - Behavioral
+-- Module Name: state_controller - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,14 +31,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity read_bcd is
-    Port ( num : out STD_LOGIC_VECTOR (26 downto 0);
-           digit : in STD_LOGIC_VECTOR (3 downto 0);
-           write : in STD_LOGIC;
-           clk100MHz : in STD_LOGIC);
-end read_bcd;
+entity state_controller is
+--  Port ( );
+end state_controller;
 
-architecture Behavioral of read_bcd is
+architecture Behavioral of state_controller is
 
 begin
 
