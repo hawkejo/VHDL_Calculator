@@ -52,7 +52,7 @@ begin
     
     --active <= x"FF";
     
-    test_active: process(data) is
+    test_active: process(number) is
     begin
         if (unsigned(number) > 9999999) then
             active <= x"FF";
