@@ -18,7 +18,6 @@
 -- 
 ----------------------------------------------------------------------------------
 
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.numeric_std.all;
@@ -36,9 +35,9 @@ entity nexys4ddr_main is
         
         lhs:        in      unsigned(7 downto 0);
         rhs:        in      unsigned(7 downto 0);
---        add:        in      std_logic;
---        sub:        in      std_logic;
---        mult:       in      std_logic;
+        add:        in      std_logic;
+        sub:        in      std_logic;
+        mult:       in      std_logic;
         div:        in      std_logic;
         rst:        in      std_logic;
         clk100MHz:  in      std_logic
@@ -59,20 +58,19 @@ begin
         bouncy => div,
         debounced => div_deb
     );
-    
-    div0: entity work.fsm_divide port map(
-        quotient => quotient,
-        remainder => remainder,
-        is_done => open,
-        divisor => rhs,
-        dividend => lhs,
-        start => div_deb,
-        clk => clk100MHz,
-        rst => inv_rst
+
+    fsm0: entity work.state_controller port map(
+        result => binary_number,
+        remainder => LED,
+        lhs => lhs,
+        rhs => rhs,
+        add => add,
+        sub => sub,
+        mult => mult,
+        div => div,
+        rst => inv_rst,
+        clk => clk100MHz
     );
-    
-    binary_number <= x"0000" & quotient;
-    LED <= remainder;
     
     disp0: entity work.bcd_controller port map(
         clk => clk100MHz,
