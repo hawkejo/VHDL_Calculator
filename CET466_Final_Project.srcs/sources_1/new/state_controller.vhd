@@ -102,9 +102,6 @@ begin
         clk => clk
     );
     product <= x"00" & mult_out;
-    -- Instantiate multiplier
---    product <= x"00" & std_logic_vector(lhs * rhs);
---    mult_done <= '1';
     
     -- Instantiate adder
     sum <= x"000" & "000" & std_logic_vector(('0' & lhs) + ('0' & rhs));
