@@ -54,6 +54,7 @@ signal div_start:       std_logic;
 signal div_done:        std_logic;
 -- Multiplier signals
 signal product:         std_logic_vector(DISP_WORD_SIZE-1 downto 0);
+signal mult_out:        std_logic_vector((INPUT_WORD_SIZE*2)-1 downto 0);
 signal mult_start:      std_logic;  -- Signals for future state machine implementation
 signal mult_done:       std_logic;
 -- Adder signals
@@ -91,8 +92,19 @@ begin
     );
     
     -- Instantiate multiplier
-    product <= x"00" & std_logic_vector(lhs * rhs);
-    mult_done <= '1';
+    mult0: entity work.fsm_multiplier port map(
+        product => mult_out,
+        is_done => mult_done,
+        multiplier => lhs,
+        multiplicand => rhs,
+        start => mult_start,
+        rst => rst,
+        clk => clk
+    );
+    product <= x"00" & mult_out;
+    -- Instantiate multiplier
+--    product <= x"00" & std_logic_vector(lhs * rhs);
+--    mult_done <= '1';
     
     -- Instantiate adder
     sum <= x"000" & "000" & std_logic_vector(('0' & lhs) + ('0' & rhs));

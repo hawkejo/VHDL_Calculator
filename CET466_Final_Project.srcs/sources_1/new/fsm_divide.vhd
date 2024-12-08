@@ -49,7 +49,6 @@ signal D:               unsigned(WORD_SIZE-1 downto 0) := to_unsigned(0, WORD_SI
 signal T:               unsigned(WORD_SIZE-1 downto 0); -- Negated divisor
 -- Subtraction signals
 signal difference:      unsigned(WORD_SIZE-1 downto 0);
-signal difference_slv:  std_logic_vector(WORD_SIZE downto 0);
 signal N_gte_D:         std_logic;
 -- Counter signals
 signal counter:         integer range 0 to WORD_SIZE;
@@ -64,6 +63,21 @@ begin
     -- Assign the output values.
     quotient <= std_logic_vector(quotient_val);
     remainder <= std_logic_vector(remainder_val);
+    
+    -- Run device counter
+    counter_done <= '1' when (counter = 0) else '0';
+    
+    div_counter: process(clk, rst) is begin
+        if rst = '0' then
+            counter <= 0;
+        elsif rising_edge(clk) then
+            if init_reg = '1' then
+                counter <= WORD_SIZE;
+            elsif counter > 0 then
+                counter <= counter - 1;
+            end if;
+        end if;
+    end process div_counter;
     
     -- Load the divisor register
     div_load: process(clk, rst) is begin
@@ -80,21 +94,6 @@ begin
     T <= not(D) + 1; -- Negate the divisor register
     -- Do some black voodoo magic and perform the subtraction operation
     (N_gte_D,difference) <= ('0' & remainder_val(WORD_SIZE-2 downto 0) & quotient_val(WORD_SIZE-1)) + ('0' & T);
-    
-    -- Run device counter
-    counter_done <= '1' when (counter = 0) else '0';
-    
-    div_counter: process(clk, rst) is begin
-        if rst = '0' then
-            counter <= 0;
-        elsif rising_edge(clk) then
-            if init_reg = '1' then
-                counter <= WORD_SIZE;
-            elsif counter > 0 then
-                counter <= counter - 1;
-            end if;
-        end if;
-    end process div_counter;
     
     -- Handle dividend and quotient
     quo_logic: process(clk, rst) is begin
