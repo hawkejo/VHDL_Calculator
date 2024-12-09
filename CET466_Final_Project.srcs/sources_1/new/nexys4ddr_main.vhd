@@ -50,6 +50,9 @@ signal quotient:        std_logic_vector(7 downto 0);
 signal remainder:       std_logic_vector(7 downto 0);
 signal inv_rst:         std_logic;
 signal div_deb:         std_logic;
+signal mult_deb:        std_logic;
+signal add_deb:         std_logic;
+signal sub_deb:         std_logic;
 begin
     inv_rst <= not rst;
     
@@ -58,16 +61,31 @@ begin
         bouncy => div,
         debounced => div_deb
     );
+    deb1: entity work.debouncer port map(
+        clk100MHz => clk100MHz,
+        bouncy => mult,
+        debounced => mult_deb
+    );
+    deb2: entity work.debouncer port map(
+        clk100MHz => clk100MHz,
+        bouncy => add,
+        debounced => add_deb
+    );
+    deb3: entity work.debouncer port map(
+        clk100MHz => clk100MHz,
+        bouncy => sub,
+        debounced => sub_deb
+    );
 
     fsm0: entity work.state_controller port map(
         result => binary_number,
         remainder => LED,
         lhs => lhs,
         rhs => rhs,
-        add => add,
-        sub => sub,
-        mult => mult,
-        div => div,
+        add => add_deb,
+        sub => sub_deb,
+        mult => mult_deb,
+        div => div_deb,
         rst => inv_rst,
         clk => clk100MHz
     );
